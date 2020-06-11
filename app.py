@@ -31,5 +31,4 @@ def search_city():
         return render_template("weather_new.html",city = new_city,temperature = temperature,description = description,icon = icon,humidity=humidity,country=country,m=m)
     return render_template("weather_new.html")
 if __name__ == '__main__':
-    app.debug = False
     app.run()
