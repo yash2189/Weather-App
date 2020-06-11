@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Weather App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -19,26 +20,7 @@
             </div>
         </div>
     </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    <form method="POST">
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" name="city" type="text" placeholder="City Name">
-                            </div>
-                            <div class="control">
-                                <button class="button is-info">
-                                    Get Weather
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+
     <section class="section">
         <div class="container">
             <div class="columns">
@@ -48,18 +30,15 @@
                         <article class="media">
                             <div class="media-left">
                                 <figure class="image is-50x50">
-                                    <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
+                                    <i class="fa fa-exclamation-triangle" style="font-size:50px" aria-hidden="true"></i>
                                 </figure>
                             </div>
                             <div class="media-content">
                                 <div class="content">
                                     <p>
-                                        <span class="title">{{ city }}</span>
-                                        <br>
-                                        <span class="subtitle">{{ temperature }}° C</span>
-                                        <br>
-                                        <span class="subtitle">Humidity is {{humidity}} %</span>
-                                        <br> {{ description }}
+                                        
+                                        <span class="title"><center><h1>City is Required</h1></center></span>
+
                                     </p>
                                 </div>
                             </div>
@@ -70,9 +49,7 @@
             </div>
         </div>
     </section>
-    <footer class="footer">
-       
-    </footer>
-</body>
 
-</html>
+    <footer class="footer">
+        <h6><center>Created Using Flask</center></h6>       
+    </footer>
