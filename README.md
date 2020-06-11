@@ -1,3 +1,3 @@
 # Weather-App
 
-* Flash Weather App
+* Flask Weather App
