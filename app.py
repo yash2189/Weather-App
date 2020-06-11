@@ -13,19 +13,23 @@ def search_city():
         city = request.form.get("city")
         if city == "":
             return render_template("error.html")
+        if len(city)<=1:
+            return render_template("error.html")
         units = 'Metric'
         url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&APPID={API_KEY}&units={units}'
         response = requests.get(url).json()
 
-        
+        country = response["sys"]["country"]
+        current_date = response["dt"]
+        m = dt.datetime.fromtimestamp(int(current_date)).strftime('%d-%m-%Y %H:%M:%S ')
         new_city = city 
         temperature = response["main"]["temp"]
         description = response["weather"][0]["description"]
         icon = response["weather"][0]["icon"]
         humidity = response["main"]["humidity"]
         
-        return render_template("weather_new.html",city = new_city,temperature = temperature,description = description,icon = icon,humidity=humidity)
+        return render_template("weather_new.html",city = new_city,temperature = temperature,description = description,icon = icon,humidity=humidity,country=country,m=m)
     return render_template("weather_new.html")
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = False
     app.run()
