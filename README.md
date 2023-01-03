@@ -7,9 +7,11 @@
 
 
 To run the flask app directly:
+- Create your virtual environment : `virtualenv venv`
+- Activate the virtual environement : `source venv/bin/activate`
 - Run : `python app.py`
 
 To use the docker image follow the steps:
 
 - Pull the image : `docker pull yash301998/flask-weather-app:latest`
-- Spawn a container : `docker run -d -p 5000:5000 flask-weather-app`
+- Spin up a container from the image: `docker run -d -p 5000:5000 flask-weather-app`
