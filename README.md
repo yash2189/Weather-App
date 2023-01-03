@@ -14,4 +14,5 @@ To run the flask app directly:
 To use the docker image follow the steps:
 
 - Pull the image : `docker pull yash301998/flask-weather-app:latest`
-- Spin up a container from the image: `docker run -d -p 5000:5000 flask-weather-app`
+- Spin up a container from the image: `docker run -d -p 5000:5000 yash301998/flask-weather-app`
+- Open a browser to validate if the app is running on localhost: `http://localhost:5000/`
