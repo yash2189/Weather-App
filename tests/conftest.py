@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 @pytest.fixture(scope="class")
 def init_setup(request):
     logger.info("Setting up Chrome Driver")
-    request.cls.driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+    request.cls.driver = webdriver.Chrome("/usr/bin/chromedriver")
     driver = request.cls.driver
     driver.implicitly_wait(50)
     yield driver
