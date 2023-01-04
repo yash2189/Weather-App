@@ -6,7 +6,6 @@ from selenium import webdriver
 logger = logging.getLogger(__name__)
 
 
-
 @pytest.fixture(scope="class")
 def init_setup(request):
     logger.info("Setting up Chrome Driver")
@@ -16,4 +15,3 @@ def init_setup(request):
     yield driver
     driver.quit()
     logger.info("Test Completed")
-
