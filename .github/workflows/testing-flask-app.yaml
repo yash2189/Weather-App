@@ -2,12 +2,14 @@ name: Sample Workflow
 run-name: Testing
 on: [push]
 jobs:
-  check-python-version:
+  job1:
+    name: check python version
     runs-on: ubuntu-latest
     steps:
       - run: python --version
 
-  setup:
+  job2:
+    name: check docker installation
     runs-on: ubuntu-latest
     steps:
       - run: docker --version
@@ -15,7 +17,8 @@ jobs:
       - run: docker run -d -p 5000:5000 yash301998/flask-weather-app:v1
       - run: docker ps
 
-  setup-chrome:
+  job3:
+    name: Setup chrome and chromedriver
     runs-on: ubuntu-latest
     steps:
       - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -26,7 +29,9 @@ jobs:
       - run: sudo chown root:root /usr/bin/chromedriver
       - run: sudo chmod +x /usr/bin/chromedriver
 
-  clone:
+  job4:
+    name: Run Tests
+    needs: [job3]
     runs-on: ubuntu-latest
     steps:
       - run: git clone https://github.com/yash2189/Weather-App.git
