@@ -1,0 +1,23 @@
+name: Sample Workflow
+run-name: Testing
+on: [push]
+jobs:
+  check-python-version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: python --version
+
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: docker --version
+      - run: docker pull yash301998/flask-weather-app:v1
+      - run: docker run -d -p 5000:5000 yash301998/flask-weather-app:v1
+      - run: docker ps
+
+  clone:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git clone https://github.com/yash2189/Weather-App.git
+      - run: pip install -r requirements.txt
+      - run: cd Weather-App && pytest tests/test_flask_app.py
