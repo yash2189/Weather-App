@@ -5,9 +5,6 @@ import logging
 from selenium.webdriver.common.by import By
 
 
-
-
-
 @pytest.mark.usefixtures("init_setup")
 class TestClassWeatherUI:
 
@@ -36,7 +33,3 @@ class TestClassWeatherUI:
         self.driver.find_element(By.XPATH, "//input[@class='input']").send_keys('x123jb')
         self.driver.find_element(By.XPATH, "//button[@class='button is-info']").click()
         assert self.driver.find_element(By.XPATH, "// h1[contains(text(), 'Internal Server Error')]")
-
-
-
-
