@@ -20,4 +20,4 @@ jobs:
       - run: echo "Starting Tests"
       - run: git clone https://github.com/yash2189/Weather-App.git
       - run: cd Weather-App/ && pip install -r requirements.txt
-      - run: cd Weather-App/ && pytest tests/test_flask_app.py
+      - run: cd Weather-App/ && sudo pytest tests/test_flask_app.py
