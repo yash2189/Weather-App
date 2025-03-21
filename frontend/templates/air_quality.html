@@ -15,7 +15,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Weather App
+                    How safe is your city's air?
                 </h1>
             </div>
         </div>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="control">
                                 <button class="button is-info">
-                                    Get Weather
+                                    Get Air Quality Index
                                 </button>
                             </div>
                         </div>
@@ -66,20 +66,14 @@
                     </div> -->
                     <div class="box">
                         <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
-                                </figure>
-                            </div>
                             <div class="media-content">
                                 <div class="content">
                                     <p>
-                                        <span class="title">{{ city }}, <span class="subtitle">{{ country }}</span></span>
+                                        <span class="title">{{ city }} </span>
                                         <br>
-                                        <span class="subtitle">{{ temperature }}°C</span>
+                                        <span class="subtitle">Air Quality Index (AQI) is {{ aqi }} </span>
                                         <br>
-                                        <span class="subtitle">Humidity is {{humidity}} %</span>
-                                        <br> {{ description }}
+                                        <span class="subtitle">Overall Air Quality is {{ aqi_status }} </span>
                                     </p>
                                 </div>
                             </div>
