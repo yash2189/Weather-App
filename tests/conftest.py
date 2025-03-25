@@ -1,6 +1,5 @@
 import logging
 import pytest
-import requests
 from selenium import webdriver
 
 logger = logging.getLogger(__name__)
