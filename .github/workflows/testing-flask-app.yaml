@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: docker --version
-      - run: docker pull yash301998/flask-weather-app:v1
-      - run: docker run -d -p 5000:5000 yash301998/flask-weather-app:v1
+      - run: docker pull yash301998/flask-weather-app:latest
+      - run: docker run -d -p 5000:5000 yash301998/flask-weather-app:latest
       - run: docker ps
       - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       - run: sudo apt install ./google-chrome-stable_current_amd64.deb
@@ -19,5 +19,5 @@ jobs:
       - run: sudo chmod +x /usr/bin/chromedriver
       - run: echo "Starting Tests"
       - run: git clone https://github.com/yash2189/Weather-App.git
-      - run: cd Weather-App/ && pip install -r requirements.txt
+      - run: cd Weather-App/ && pip install -r backend/requirements.txt
       - run: cd Weather-App/ && sudo pytest tests/test_flask_app.py

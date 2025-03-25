@@ -1,0 +1,24 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: trailing-whitespace
+    language_version: python3
+  - id: end-of-file-fixer
+    language_version: python3
+  - id: check-yaml
+    language_version: python3
+  - id: debug-statements
+    language_version: python3
+- repo: https://github.com/PyCQA/pydocstyle
+  rev: 6.3.0
+  hooks:
+  - id: pydocstyle
+    args:
+    - --ignore=D104,D100,D203,D213,D102,D105,D107,D101,D400,D415,D205
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.9.3
+  hooks:
+  - id: ruff
+    args: [ --fix ]
+  - id: ruff-format
