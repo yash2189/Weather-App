@@ -1,6 +1,6 @@
 name: Sample Workflow
 run-name: Testing
-on: [push]
+# on: [push]
 jobs:
   job1:
     name: Execute Tests
