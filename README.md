@@ -10,6 +10,12 @@ To run the flask app directly:
 - Create your virtual environment : `virtualenv venv`
 - Activate the virtual environement : `source venv/bin/activate`
 - create a `config.json` in project's root directory
+
+Example:
+`{
+    "API_KEY": ""
+}`
+
 - Run : `python app.py`
 
 To use the docker image follow the steps:
