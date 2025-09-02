@@ -15,10 +15,27 @@ repos:
   hooks:
   - id: pydocstyle
     args:
-    - --ignore=D104,D100,D203,D213,D102,D105,D107,D101,D400,D415,D205
+    - --ignore=D104,D100,D203,D213,D102,D105,D107,D101,D400,D415,D205,D103
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.9.3
   hooks:
   - id: ruff
     args: [ --fix ]
   - id: ruff-format
+- repo: local
+  hooks:
+    - id: block-config-json
+      name: block-config-json
+      entry: python3 hooks/block_config.py
+      language: system
+      types: [file]
+      files: ^config\.json$
+
+- repo: local
+  hooks:
+    - id: docker-hooks
+      name: docker-hooks
+      entry: python3 hooks/docker_hooks.py
+      language: system
+      types: [file]
+      files: Dockerfile
