@@ -1,20 +1,30 @@
 from flask import Flask, request, render_template
 import requests
 import json
+import os
 import datetime as dt
 
 app = Flask(__name__, template_folder="../frontend/templates")
 
 
-# Load API key from config.json
 def load_api_key():
-    """Load Configurations"""
-    with open("config.json") as config_file:
-        config = json.load(config_file)
-        return config.get("API_KEY")
+    """Get API key from env variable, fallback to config.json"""
+    api_key = os.environ.get("API_KEY")
+    if api_key:
+        return api_key
+
+    try:
+        with open("config.json") as config_file:
+            config = json.load(config_file)
+            return config.get("API_KEY")
+    except FileNotFoundError:
+        return None  # or raise an error if it's required
 
 
 API_KEY = load_api_key()
+
+if not API_KEY:
+    raise RuntimeError("API_KEY not found in environment variables or config.json")
 
 
 def check_aqi_type(aqi):
