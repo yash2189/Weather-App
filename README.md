@@ -16,9 +16,7 @@ Example:
     "API_KEY": ""
 }`
 
-<br>
 or
-<br>
 
 `export API_KEY = 'YOUR_KEY'`
 
