@@ -45,6 +45,12 @@ def welcome():
     return render_template("landing_page.html")
 
 
+@app.route("/health", methods=["GET"])
+def health():
+    """Render Health Page"""
+    return render_template("health.html")
+
+
 @app.route("/weather", methods=["POST", "GET"])
 def weather():
     """Fetch Weather for a city"""

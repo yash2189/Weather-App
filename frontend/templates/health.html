@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Weather App</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+        /* Fix footer to bottom */
+        footer.footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+            padding: 1rem 0;
+            z-index: 10;
+        }
+
+        /* Add bottom padding so content won't be hidden behind footer */
+        body {
+            padding-bottom: 60px; /* adjust based on footer height */
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero is-primary">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title">App is healthy</h1>
+          </div>
+        </div>
+      </section>
+
+
+    <footer class="footer">
+        <h6>
+            <center>
+                Created with <i class="fa fa-heart"></i> using Flask
+            </center>
+        </h6>
+    </footer>
+</body>
+
+</html>
