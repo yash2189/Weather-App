@@ -42,12 +42,3 @@ repos:
       language: system
       types: [file]
       files: Dockerfile
-
-- repo: local
-  hooks:
-    - id: kube-linter
-      name: kube-linter
-      entry: hooks/run-kube-linter.sh
-      language: script
-      files: \.(yaml|yml)$
-      stages: [commit]

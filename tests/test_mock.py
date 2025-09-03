@@ -11,7 +11,7 @@ def client():
 
 def test_weather_endpoint(client):
     with (
-        patch("backend.app.load_api_key", return_value="test_api_key"),
+        patch("backend.app.get_api_key", return_value="test_api_key"),
         patch("requests.get") as mock_get,
     ):
         mock_get.return_value.status_code = 200
@@ -21,7 +21,7 @@ def test_weather_endpoint(client):
 
 def test_aq_endpoint(client):
     with (
-        patch("backend.app.load_api_key", return_value="test_api_key"),
+        patch("backend.app.get_api_key", return_value="test_api_key"),
         patch("requests.get") as mock_get,
     ):
         mock_get.return_value.status_code = 200

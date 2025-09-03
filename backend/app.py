@@ -7,24 +7,16 @@ import datetime as dt
 app = Flask(__name__, template_folder="../frontend/templates")
 
 
-def load_api_key():
-    """Get API key from env variable, fallback to config.json"""
+def get_api_key():
     api_key = os.environ.get("API_KEY")
     if api_key:
         return api_key
-
     try:
         with open("config.json") as config_file:
             config = json.load(config_file)
             return config.get("API_KEY")
     except FileNotFoundError:
-        return None  # or raise an error if it's required
-
-
-API_KEY = load_api_key()
-
-if not API_KEY:
-    raise RuntimeError("API_KEY not found in environment variables or config.json")
+        return None
 
 
 def check_aqi_type(aqi):
@@ -54,6 +46,9 @@ def health():
 @app.route("/weather", methods=["POST", "GET"])
 def weather():
     """Fetch Weather for a city"""
+    API_KEY = get_api_key()
+    if not API_KEY:
+        return render_template("error.html", message="API Key missing")
     if request.method == "POST":
         city = request.form.get("city")
         if city == "":
@@ -89,6 +84,9 @@ def weather():
 @app.route("/air_quality", methods=["POST", "GET"])
 def air_quality():
     """Fetch AQI Data of a city"""
+    API_KEY = get_api_key()
+    if not API_KEY:
+        return render_template("error.html", message="API Key missing")
     if request.method == "POST":
         city = request.form.get("city")
         if city == "":
