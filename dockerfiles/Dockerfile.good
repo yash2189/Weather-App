@@ -16,4 +16,4 @@ EXPOSE 5000
 RUN useradd -m myuser
 USER myuser
 
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["python3", "-u", "backend/app.py"]
