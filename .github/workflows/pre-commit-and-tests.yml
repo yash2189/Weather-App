@@ -13,7 +13,7 @@ jobs:
   precommit-and-test:
     runs-on: ubuntu-latest
     env:
-      SKIP_KUBELINTER: ${{ github.event_name == 'pull_request' && '1' || '' }}
+      SKIP_KUBELINTER: ${{ (github.event_name == 'pull_request' || github.ref == 'refs/heads/master') && '1' || '' }}
 
     steps:
       - name: Checkout repository
