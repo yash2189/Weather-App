@@ -28,10 +28,10 @@ jobs:
           pip install pre-commit
           pip install -r backend/requirements.txt
 
-      - name: Run kube-linter
-        uses: stackrox/kube-linter-action@v0.2.2
+      - name: Scan Kubernetes Manifests with KubeLinter
+        uses: stackrox/kube-linter-action@v1
         with:
-          args: lint ./k8s
+          directory: k8s
 
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
