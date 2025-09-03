@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-weather-app
+  namespace: test
+spec:
+  replicas: 0  # Bad: zero replicas
+  selector:
+    matchLabels:
+      app: flask-weather-app
+  template:
+    metadata:
+      labels:
+        app: flask-weather-app
+    spec:
+      containers:
+      - name: flask-weather-app
+        image: yash301998/flask-weather-app:latest
+        imagePullPolicy: Never  # Bad: usually want Always or IfNotPresent
+        ports:
+        - containerPort: 5000
+        securityContext:
+          runAsUser: 0   # Bad: running as root
+          privileged: true  # Bad: privileged container
+          allowPrivilegeEscalation: true  # Bad: allows privilege escalation
+        # No resource requests/limits (bad)
+        # No readiness or liveness probes (bad)
+        env:
+        - name: API_KEY
+          value: "hardcoded-api-key"  # Bad: secret in plain text

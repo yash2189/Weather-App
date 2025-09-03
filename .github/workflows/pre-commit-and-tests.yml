@@ -1,18 +1,17 @@
-name: Pre-Commit Checks and Tests
+name: PR-Checks
 
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
-  precommit-and-test:
+  precommit-hooks:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -28,13 +27,33 @@ jobs:
           pip install pre-commit
           pip install -r backend/requirements.txt
 
-      - name: Scan Kubernetes Manifests with KubeLinter
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files
+
+  kube-linter-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run KubeLinter scan
         uses: stackrox/kube-linter-action@v1
         with:
           directory: k8s
 
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
+
+      - name: Install test dependencies
+        run: pip install -r backend/requirements.txt
 
       - name: Run tests
         run: pytest -v

@@ -15,10 +15,33 @@ spec:
     spec:
       containers:
       - name: flask-weather-app
-        image: yash301998/flask-weather-app:latest
+        image: yash301998/flask-weather-app:good
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
+        securityContext:
+          runAsUser: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
         env:
         - name: API_KEY
           valueFrom:
