@@ -9,17 +9,23 @@
 To run the flask app directly:
 - Create your virtual environment : `virtualenv venv`
 - Activate the virtual environement : `source venv/bin/activate`
-- create a `config.json` in project's root directory
+- create a `config.json` in project's root directory or export env variable for `API_KEY`
 
 Example:
 `{
     "API_KEY": ""
 }`
 
+<br>
+or
+<br>
+
+`export API_KEY = 'YOUR_KEY'`
+
 - Run : `python app.py`
 
 To use the docker image follow the steps:
 
 - Pull the image : `docker pull yash301998/flask-weather-app:latest`
-- Spin up a container from the image: `docker run -d -p 5000:5000 yash301998/flask-weather-app`
+- Spin up a container from the image: `docker run -d -p 5000:5000 -e API_KEY=<KEY> yash301998/flask-weather-app:latest`
 - Open a browser to validate if the app is running on localhost: `http://localhost:5000/`
