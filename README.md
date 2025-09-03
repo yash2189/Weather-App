@@ -27,3 +27,24 @@ To use the docker image follow the steps:
 - Pull the image : `docker pull yash301998/flask-weather-app:latest`
 - Spin up a container from the image: `docker run -d -p 5000:5000 -e API_KEY=<KEY> yash301998/flask-weather-app:latest`
 - Open a browser to validate if the app is running on localhost: `http://localhost:5000/`
+
+
+Deploying to OpenShift
+
+1. Login to your OpenShift Cluster
+`oc login --token=YOUR_TOKEN --server=https://your.ocp.cluster:port`
+
+2. Create a New Project (Optional)
+`oc new-project flask-weather`
+
+3. Create Kubernetes Secret for API Key
+`oc create secret generic weather-api-key \
+  --from-literal=API_KEY=your_openweather_api_key`
+
+4. Apply Manifests
+`oc apply -f k8s/`
+
+5. Access the App
+Get the route URL:
+`oc get route flask-weather-app`
+Then open `http://<route-url>`
