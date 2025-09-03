@@ -12,8 +12,8 @@ on:
 jobs:
   precommit-and-test:
     runs-on: ubuntu-latest
-    env:
-      SKIP_KUBELINTER: ${{ (github.event_name == 'pull_request' || github.ref == 'refs/heads/master') && '1' || '' }}
+    # env:
+    #   SKIP_KUBELINTER: ${{ (github.event_name == 'pull_request' || github.ref == 'refs/heads/master') && '1' || '' }}
 
     steps:
       - name: Checkout repository
@@ -29,6 +29,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install pre-commit
           pip install -r backend/requirements.txt
+
+      - name: Install kube-linter
+        run: |
+          curl -L https://github.com/stackrox/kube-linter/releases/latest/download/kube-linter-linux-amd64 \
+            -o kube-linter
+          chmod +x kube-linter
+          sudo mv kube-linter /usr/local/bin/
 
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
