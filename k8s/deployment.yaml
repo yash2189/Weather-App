@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-weather-app
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-weather-app
+  template:
+    metadata:
+      labels:
+        app: flask-weather-app
+    spec:
+      containers:
+      - name: flask-weather-app
+        image: yash301998/flask-weather-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: weather-api-key
+              key: API_KEY

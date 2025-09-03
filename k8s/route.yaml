@@ -1,0 +1,10 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: flask-weather-app
+spec:
+  to:
+    kind: Service
+    name: flask-weather-app
+  port:
+    targetPort: 5000
