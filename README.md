@@ -29,7 +29,7 @@ To use the docker image follow the steps:
 - Open a browser to validate if the app is running on localhost: `http://localhost:5000/`
 
 
-Deploying to OpenShift
+## Deploying to OpenShift
 
 1. Login to your OpenShift Cluster
 `oc login --token=YOUR_TOKEN --server=https://your.ocp.cluster:port`
@@ -48,3 +48,30 @@ Deploying to OpenShift
 Get the route URL:
 `oc get route flask-weather-app`
 Then open `http://<route-url>`
+
+
+## Linting & Security Checks
+**KubeLinter** runs in GitHub Actions to flag:
+
+- runAsUser: 0, privileged: true, missing probes, resource limits, latest image tags, and hardcoded secrets.
+
+**Kyverno policies** (under `k8s/cluster_policy/`) enforce these checks on the cluster:
+
+- Block root user and privilege escalation
+
+- Require labels (app)
+
+- Disallow latest image tags
+
+- Require secrets from valueFrom.secretKeyRef
+
+## Install Kyverno on cluster
+
+To install Kyverno:
+`helm repo add kyverno https://kyverno.github.io/kyverno/
+helm repo update
+oc new-project kyverno
+helm install kyverno kyverno/kyverno -n kyverno`
+
+## Apply Cluster policies
+`oc apply -f k8s/cluster_policy/`
