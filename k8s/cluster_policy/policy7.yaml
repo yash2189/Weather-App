@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: no-plaintext-secrets
+spec:
+  validationFailureAction: enforce
+  rules:
+    - name: disallow-plaintext-env
+      match:
+        resources:
+          kinds:
+            - Pod
+      validate:
+        deny:
+          conditions:
+            any:
+              - key: "{{request.object.spec.containers[0].securityContext.runAsUser}}"
+                operator: Equals
+                value: 0
