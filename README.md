@@ -1,9 +1,6 @@
 # Weather-App
 
-* Flask Weather App
 - An application that gives the weather and Air Quality Index (AQI) by the city name
-- API Used OpenWeatherMap - https://openweathermap.org/current
-- Docker image is available for this app
 
 
 ## Tech Stack
