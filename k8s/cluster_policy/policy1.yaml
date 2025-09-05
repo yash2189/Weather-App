@@ -20,8 +20,3 @@ spec:
           containers:
           - securityContext:
               runAsNonRoot: true
-              privileged: false
-          - resources:
-              limits:
-                cpu: "?*"
-                memory: "?*"
