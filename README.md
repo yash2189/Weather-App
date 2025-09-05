@@ -67,11 +67,12 @@ Then open `http://<route-url>`
 
 ## Install Kyverno on cluster
 
-To install Kyverno:
-`helm repo add kyverno https://kyverno.github.io/kyverno/
-helm repo update
-oc new-project kyverno
-helm install kyverno kyverno/kyverno -n kyverno`
+Install helm utility
+And then install Kyverno:
+- `helm repo add kyverno https://kyverno.github.io/kyverno/`
+- `helm repo update`
+- `oc new-project kyverno`
+- `helm install kyverno kyverno/kyverno -n kyverno`
 
 ## Apply Cluster policies
 `oc apply -f k8s/cluster_policy/`
