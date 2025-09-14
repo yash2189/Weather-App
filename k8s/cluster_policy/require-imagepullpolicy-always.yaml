@@ -9,10 +9,13 @@ spec:
       match:
         resources:
           kinds:
-            - Pod
+            - Deployment
       validate:
-        message: "imagePullPolicy must be Always."
+        message: "All containers must have imagePullPolicy set to Always."
         pattern:
           spec:
-            containers:
-              - imagePullPolicy: Always
+            template:
+              spec:
+                containers:
+                - name: "*"
+                  imagePullPolicy: "Always"

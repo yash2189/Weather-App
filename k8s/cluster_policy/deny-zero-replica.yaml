@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deny-zero-replica
+spec:
+  rules:
+    - name: deny-zero-replica
+      match:
+        resources:
+          kinds:
+            - Deployment
+      validate:
+        message: "Zero replicas are not allowed"
+        pattern:
+          spec:
+            replicas:
+              not: 0
+    - name: deny-zero-replica-missing
+      match:
+        resources:
+          kinds:
+            - Deployment
+      validate:
+        message: "Replicas field must be specified and cannot be zero"
+        anyPattern:
+          - spec:
+              replicas: ">0"
+          - spec:
+              replicas: ">=1"

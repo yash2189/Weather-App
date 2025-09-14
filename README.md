@@ -45,12 +45,19 @@ or
 
 3. Create Kubernetes Secret for API Key
 `oc create secret generic weather-api-key \
-  --from-literal=API_KEY=your_openweather_api_key`
+  --from-literal=API_KEY=your_openweather_api_key -n flask-weather`
 
-4. Apply Manifests
+4. Create Docker Hub Secret (for image pulling)
+`oc create secret docker-registry docker-hub-secret \
+  --docker-server=docker.io \
+  --docker-username=YOUR_DOCKERHUB_USERNAME \
+  --docker-password=YOUR_DOCKERHUB_PASSWORD \
+  --docker-email=YOUR_EMAIL -n flask-weather`
+
+5. Apply Manifests
 `oc apply -f k8s/`
 
-5. Access the App
+6. Access the App
 Get the route URL:
 `oc get route flask-weather-app`
 Then open `http://<route-url>`

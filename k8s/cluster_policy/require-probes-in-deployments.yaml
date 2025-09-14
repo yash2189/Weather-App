@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-probes-in-deployments
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+    - name: require-probes-for-all-containers
+      match:
+        resources:
+          kinds:
+            - Deployment
+      validate:
+        message: "Each container in a Deployment must define both readinessProbe and livenessProbe."
+        pattern:
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: "*"
+                    readinessProbe:
+                      httpGet:
+                        path: "*"
+                        port: "*"
+                    livenessProbe:
+                      httpGet:
+                        path: "*"
+                        port: "*"
