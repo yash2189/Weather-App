@@ -13,6 +13,8 @@ spec:
       labels:
         app: flask-weather-app
     spec:
+      imagePullSecrets:
+      - name: docker-hub-secret
       containers:
       - name: flask-weather-app
         image: yash301998/flask-weather-app:good
