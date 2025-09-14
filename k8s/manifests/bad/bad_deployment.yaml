@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-weather-app-1
-        image: yash301998/flask-weather-app:latest
+        image: yash301998/flask-weather-app:latest # Bad latest tag
         imagePullPolicy: Never  # usually want Always or IfNotPresent
         ports:
         - containerPort: 5000
