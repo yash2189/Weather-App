@@ -2,6 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: flask-weather-app
+  namespace: flask-weather
 spec:
   to:
     kind: Service

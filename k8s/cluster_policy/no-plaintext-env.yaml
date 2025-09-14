@@ -1,0 +1,32 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: no-plaintext-env
+spec:
+  validationFailureAction: enforce
+  rules:
+    - name: deny-plaintext-env
+      match:
+        resources:
+          kinds:
+            - Deployment
+      validate:
+        message: "Plaintext environment variables are not allowed; use secrets instead."
+        anyPattern:
+          - spec:
+              template:
+                spec:
+                  containers:
+                  - name: "*"
+                    env: "!*"
+          - spec:
+              template:
+                spec:
+                  containers:
+                  - name: "*"
+                    env:
+                    - name: "*"
+                      valueFrom:
+                        secretKeyRef:
+                          name: "?*"
+                          key: "?*"
