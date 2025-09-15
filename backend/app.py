@@ -3,9 +3,10 @@ import requests
 import json
 import os
 import datetime as dt
-
+import pdb
 app = Flask(__name__, template_folder="../frontend/templates")
 
+API_KEY = "abc122389jnmaskk"
 
 def get_api_key():
     api_key = os.environ.get("API_KEY")
@@ -39,7 +40,6 @@ def welcome():
 
 @app.route("/health", methods=["GET"])
 def health():
-    """Render Health Page"""
     return render_template("health.html")
 
 
@@ -47,6 +47,7 @@ def health():
 def weather():
     """Fetch Weather for a city"""
     API_KEY = get_api_key()
+    pdb.set_trace
     if not API_KEY:
         return render_template("error.html", message="API Key missing")
     if request.method == "POST":
@@ -83,7 +84,6 @@ def weather():
 
 @app.route("/air_quality", methods=["POST", "GET"])
 def air_quality():
-    """Fetch AQI Data of a city"""
     API_KEY = get_api_key()
     if not API_KEY:
         return render_template("error.html", message="API Key missing")
