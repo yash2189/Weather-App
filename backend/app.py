@@ -4,9 +4,11 @@ import json
 import os
 import datetime as dt
 import pdb
+
 app = Flask(__name__, template_folder="../frontend/templates")
 
 API_KEY = "abc122389jnmaskk"
+
 
 def get_api_key():
     api_key = os.environ.get("API_KEY")
