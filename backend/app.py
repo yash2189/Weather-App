@@ -7,7 +7,7 @@ import pdb
 
 app = Flask(__name__, template_folder="../frontend/templates")
 
-API_KEY = "abc122389jnmasssfkk"
+API_KEY = "abc122389jnmasssfskk"
 
 
 def get_api_key():
