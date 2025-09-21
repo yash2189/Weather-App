@@ -7,7 +7,7 @@ import pdb
 
 app = Flask(__name__, template_folder="../frontend/templates")
 
-API_KEY = "abc122389jnmasssfskk"
+API_KEY = "abc122389jnmasssfskksdsa"
 
 
 def get_api_key():
@@ -84,7 +84,7 @@ def weather():
     return render_template("weather.html")
 
 
-@app.route("/air_quality", methods=["POST", "GET"]
+@app.route("/air_quality", methods=["POST", "GET"])
 def air_quality():
     API_KEY = get_api_key()
     if not API_KEY:
@@ -109,6 +109,9 @@ def air_quality():
             "air_quality.html", city=city, aqi=aqi, aqi_status=aqi_status
         )
     return render_template("air_quality.html")
+
+
+
 
 
 if __name__ == "__main__":
