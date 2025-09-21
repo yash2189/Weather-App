@@ -3,16 +3,23 @@ kind: ClusterPolicy
 metadata:
   name: deny-zero-replica
 spec:
+  background: false
   rules:
     - name: deny-zero-replica-missing
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "Replicas field must be specified and cannot be zero"
-        anyPattern:
-          - spec:
-              replicas: ">0"
-          - spec:
-              replicas: ">=1"
+        deny:
+          conditions:
+            any:
+              - key: "{{ request.object.spec.replicas == null }}"
+                operator: Equals
+                value: true
+              - key: "{{ request.object.spec.replicas }}"
+                operator: Equals
+                value: 0

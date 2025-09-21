@@ -3,25 +3,31 @@ kind: ClusterPolicy
 metadata:
   name: require-resource-requests-limits
 spec:
-  validationFailureAction: enforce
+  background: false
   rules:
     - name: validate-resources
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "CPU and memory resource requests and limits must be specified for all containers."
-        pattern:
-          spec:
-            template:
-              spec:
-                containers:
-                - name: "*"
-                  resources:
-                    requests:
-                      cpu: "?*"
-                      memory: "?*"
-                    limits:
-                      cpu: "?*"
-                      memory: "?*"
+        foreach:
+        - list: "request.object.spec.template.spec.containers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.resources.requests.cpu == null }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.resources.requests.memory == null }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.resources.limits.cpu == null }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.resources.limits.memory == null }}"
+                  operator: Equals
+                  value: true
