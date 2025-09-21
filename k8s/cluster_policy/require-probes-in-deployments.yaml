@@ -3,27 +3,25 @@ kind: ClusterPolicy
 metadata:
   name: require-probes-in-deployments
 spec:
-  validationFailureAction: enforce
-  background: true
+  background: false
   rules:
     - name: require-probes-for-all-containers
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "Each container in a Deployment must define both readinessProbe and livenessProbe."
-        pattern:
-          spec:
-            template:
-              spec:
-                containers:
-                  - name: "*"
-                    readinessProbe:
-                      httpGet:
-                        path: "*"
-                        port: "*"
-                    livenessProbe:
-                      httpGet:
-                        path: "*"
-                        port: "*"
+        foreach:
+        - list: "request.object.spec.template.spec.containers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.readinessProbe == null }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.livenessProbe == null }}"
+                  operator: Equals
+                  value: true

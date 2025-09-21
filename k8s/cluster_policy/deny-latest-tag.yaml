@@ -3,27 +3,35 @@ kind: ClusterPolicy
 metadata:
   name: no-latest-tag
 spec:
-  validationFailureAction: enforce
+  background: false
   rules:
     - name: deny-latest-tag
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "Using image tag 'latest' is not allowed for security reasons."
-        anyPattern:
-          # Case 1: initContainers not present
-          - spec:
-              template:
-                spec:
-                  containers:
-                    - image: "!*:latest"
-          # Case 2: initContainers present and no latest tags in containers or initContainers
-          - spec:
-              template:
-                spec:
-                  containers:
-                    - image: "!*:latest"
-                  initContainers:
-                    - image: "!*:latest"
+        foreach:
+        - list: "request.object.spec.template.spec.containers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.image }}"
+                  operator: Equals
+                  value: "*:latest"
+                - key: "{{ element.image }}"
+                  operator: Equals
+                  value: "latest"
+        - list: "request.object.spec.template.spec.initContainers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.image }}"
+                  operator: Equals
+                  value: "*:latest"
+                - key: "{{ element.image }}"
+                  operator: Equals
+                  value: "latest"

@@ -3,29 +3,23 @@ kind: ClusterPolicy
 metadata:
   name: require-app-label
 spec:
-  validationFailureAction: enforce
+  background: false
   rules:
-    - name: require-app-label-on-pods
-      match:
-        resources:
-          kinds:
-            - Pod
-      validate:
-        message: "Pod must have 'app' label."
-        pattern:
-          metadata:
-            labels:
-              app: "?*"
     - name: require-app-label-on-deployments
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "Deployment pod template must have 'app' label."
-        pattern:
-          spec:
-            template:
-              metadata:
-                labels:
-                  app: "?*"
+        deny:
+          conditions:
+            any:
+              - key: "{{ request.object.spec.template.metadata.labels.app == null }}"
+                operator: Equals
+                value: true
+              - key: "{{ request.object.spec.template.metadata.labels.app }}"
+                operator: Equals
+                value: ""

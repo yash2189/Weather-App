@@ -3,25 +3,28 @@ kind: ClusterPolicy
 metadata:
   name: restrict-privileged-root-containers
 spec:
-  validationFailureAction: enforce
-  background: true
+  background: false
   rules:
     - name: deny-privileged-or-root-any-container
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
-        message: >-
-          Containers must NOT be privileged, run as root (runAsUser=0), allow privilege escalation,
-          or have runAsNonRoot=false or missing.
-        pattern:
-          spec:
-            template:
-              spec:
-                containers:
-                - name: "*"
-                  securityContext:
-                    runAsNonRoot: true
-                    allowPrivilegeEscalation: false
-                    privileged: "!true"
+        failureAction: Enforce
+        message: "Containers must not be privileged, run as root, or allow privilege escalation"
+        foreach:
+        - list: "request.object.spec.template.spec.containers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.securityContext.privileged }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.securityContext.runAsNonRoot }}"
+                  operator: Equals
+                  value: false
+                - key: "{{ element.securityContext.allowPrivilegeEscalation }}"
+                  operator: Equals
+                  value: true

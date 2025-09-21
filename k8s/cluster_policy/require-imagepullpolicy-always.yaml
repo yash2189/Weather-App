@@ -3,19 +3,25 @@ kind: ClusterPolicy
 metadata:
   name: require-imagepullpolicy-always
 spec:
-  validationFailureAction: enforce
+  background: false
   rules:
     - name: check-imagepullpolicy
       match:
-        resources:
-          kinds:
-            - Deployment
+        any:
+        - resources:
+            kinds:
+              - Deployment
       validate:
+        failureAction: Enforce
         message: "All containers must have imagePullPolicy set to Always."
-        pattern:
-          spec:
-            template:
-              spec:
-                containers:
-                - name: "*"
-                  imagePullPolicy: "Always"
+        foreach:
+        - list: "request.object.spec.template.spec.containers[]"
+          deny:
+            conditions:
+              any:
+                - key: "{{ element.imagePullPolicy == null }}"
+                  operator: Equals
+                  value: true
+                - key: "{{ element.imagePullPolicy }}"
+                  operator: NotEquals
+                  value: "Always"
