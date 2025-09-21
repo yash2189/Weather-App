@@ -90,4 +90,4 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit scan
-        run: bandit -r backend/ -ll -iii -o bandit-report.txt
+        run: bandit -r backend/ -ll
