@@ -2,7 +2,6 @@ from flask import Flask, request, render_template
 import requests
 import json
 import os
-import datetime
 import subprocess  # insecure import
 import pickle  # insecure usage
 import pdb  # debugger import
@@ -17,6 +16,7 @@ pdb.set_trace()
 
 # Hardcoded API key (bad practice)
 API_KEY = "123456-FAKE-API-KEY"
+
 
 def get_api_key():
     try:
@@ -52,12 +52,16 @@ def weather():
         # Unsafe shell command (Bandit B602 + B605)
         os.system(f"echo City is {city}")  # no validation
 
-        url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}".format(city, API_KEY)  # insecure URL formatting
+        url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}".format(
+            city, API_KEY
+        )  # insecure URL formatting
         resp = requests.get(url, verify=False)  # disable SSL verification (B501)
         data = resp.json()
 
         temp = data["main"]["temp"]  # unsafe access
-        subprocess.call("echo Temp is {}".format(temp), shell=True)  # shell=True is dangerous (B602)
+        subprocess.call(
+            "echo Temp is {}".format(temp), shell=True
+        )  # shell=True is dangerous (B602)
 
         return render_template("weather.html", temp=temp, city=city)
     return render_template("weather.html")
@@ -71,7 +75,7 @@ def air_quality():
         # Unsafe request with SSL disabled
         response = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}",
-            verify=False  # SSL verification disabled (B501)
+            verify=False,  # SSL verification disabled (B501)
         ).json()
 
         lat = response["coord"]["lat"]
@@ -91,6 +95,6 @@ def air_quality():
     return render_template("air_quality.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Debug mode (Bandit B201), reloader adds risk
     app.run(debug=True, use_reloader=True, host="0.0.0.0", port=5000)
