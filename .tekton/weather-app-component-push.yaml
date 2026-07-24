@@ -23,7 +23,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: kind-registry:{{revision}}
+    value: kind-registry:5001/weather-app:{{revision}}
   - name: dockerfile
     value: dockerfiles/Dockerfile.good
   pipelineSpec:
